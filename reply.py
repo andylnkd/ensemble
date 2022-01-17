@@ -11,42 +11,61 @@ def follow():
     lastID = retrieveID(File)
 
     #Checks mentions 
-    if lastID == None:
-        mentions = api.mentions_timeline(tweet_mode = 'extended')
-    else:
-        #Use the last tweet responded id to avoid double responses
-        mentions = api.mentions_timeline(lastID, tweet_mode = 'extended')
+    
+    mentions = api.mentions_timeline(since_id = lastID)
     
     #Loop in the mentions 
     for mention in reversed(mentions):
-        #Checks for commands 
-        if ('#Help' or '#help') in mention.txt:
+        print('Looking for mentions')
+        #Checks for commands
+        if ('#Help' or '#help') in mention.text:
+            #Mark as favorite
             mention.favorite()
-            lastID = mention.id
-            storeID(lastID, File)
-            api.update_status('@' + mention.user.screen_name + 'Simply reply or QT with an NFT URI and we will provide an estimate and a Yay/ Nay from our experts!')
+            print(mention.text)
+            #Store the id of the mention 
+            last_ID = mention.id
+            storeID(last_ID, File)
+            #Reply to the mention 
+            api.update_status('@' + mention.user.screen_name + ' Simply reply or QT with an NFT URI and we will provide an estimate and a Yay/ Nay from our experts!', in_reply_to_status_id = mention.id)
+            print('tweet answer')
 
-        elif ('#Discord' or '#discord') in mention.txt:
+        elif('#Discord' or '#discord') in mention.text:
+            print(mention.text)
+            #Mark as favorite
             mention.favorite()
-            lastID = mention.id
-            storeID(lastID, File)
-            api.update_status('@' + mention.user.screen_name + 'Join our free Discord server to get rating at any time 24x7! Server here:')
-        
-        elif ('#Price' or '#price') in mention.txt:
+            #Store the id
+            last_ID = mention.id
+            storeID(last_ID, File)
+            #Reply to mention
+            api.update_status('@' + mention.user.screen_name + ' Join our free Discord server to get rating at any time 24x7! Server here:', in_reply_to_status_id = mention.id)
+            print('tweet answer')
+
+        elif ('#Price' or '#price') in mention.text:
+            print(mention.text)
+            #Mark as favorite
             mention.favorite()
-            lastID = mention.id
-            storeID(lastID, File)
-            api.update_status('@' + mention.user.screen_name + 'Hey there, we would love to provide a free price estimate for NFTs. Feel free to click here or go to getmagic.ai on your mobile browser!')
-        
-        elif ('#FindMore' or '#findmore') in mention.txt:
+            #Store the id
+            last_ID = mention.id
+            storeID(last_ID, File)
+            #Reply to mention
+            api.update_status('@' + mention.user.screen_name + ' Hey there, we would love to provide a free price estimate for NFTs. Feel free to click here or go to getmagic.ai on your mobile browser!', in_reply_to_status_id = mention.id)
+            print('tweet answer')
+
+        elif ('#FindMore' or '#findmore') in mention.text:
+            print(mention.text)
+            #Mark as favorite
             mention.favorite()
-            lastID = mention.id
-            api.update_status('@' + mention.usser.screen_name + 'You could find more in  https://opensea.io/assets?search[query]=new')
+            #Store the id
+            last_ID = mention.id
+            storeID(last_ID, File)
+            #Reply to mention
+            api.update_status('@' + mention.user.screen_name + ' You could find more in  https://opensea.io/assets?search[query]=new',  in_reply_to_status_id = mention.id)
+            print('tweet answer')
 
              
 def retrieveID(file):
     id_read = open(file, 'r')
-    lastID = int(id_read.read().strip())
+    lastID = id_read.read().strip('\n')
     id_read.close()
 
     return lastID
@@ -61,5 +80,5 @@ def storeID(id, file):
 
 def main():
     follow()
-    
 
+main()
