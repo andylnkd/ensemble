@@ -8,6 +8,6 @@ def follow():
     #Get account followers
     for follower in tweepy.Cursor(api.get_followers).items(1):
         follower.follow()
-        print('New follow' + follower.screen_name)
+        print('New follow ' + follower.screen_name)
         
 main()
