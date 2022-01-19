@@ -37,7 +37,7 @@ def follow():
             last_ID = mention.id
             storeID(last_ID, File)
             #Reply to mention
-            api.update_status('@' + mention.user.screen_name + ' Join our free Discord server to get rating at any time 24x7! Server here:', in_reply_to_status_id = mention.id)
+            api.update_status('@' + mention.user.screen_name + ' Join our free Discord server to get rating at any time 24x7! Server here: https://discord.com/channels/933156809944993802/933156809944993804', in_reply_to_status_id = mention.id)
             print('tweet answer')
 
         elif ('#Price' or '#price') in mention.text:
