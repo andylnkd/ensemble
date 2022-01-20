@@ -61,7 +61,15 @@ def follow():
             #Reply to mention
             api.update_status('@' + mention.user.screen_name + ' You could find more in  https://opensea.io/assets?search[query]=new',  in_reply_to_status_id = mention.id)
             print('tweet answer')
-
+        else:
+            print(mention.text)
+            #Mark as favorite
+            mention.favorite()
+            #Store the id
+            last_ID = mention.id
+            storeID(last_ID, File)
+            #Reply to mention
+            api.update_status('@' + mention.user.screen_name + ' To get a free rating simply fill out this form, we will send you an update when our experts have their rating ready! https://anup702844.typeform.com/to/DxmDIZ0t')
              
 def retrieveID(file):
     id_read = open(file, 'r')
