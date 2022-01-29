@@ -18,9 +18,9 @@ def follow():
     for mention in reversed(mentions):
         print('Looking for mentions')
         #Checks for commands
-        if ('#Help' or '#help') in mention.text:
+        if ("#Help" in mention.text or "#help" in mention.text):
             #Mark as favorite
-            #mention.favorite()
+            mention.favorite()
             print(mention.text)
             #Store the id of the mention 
             last_ID = mention.id
@@ -29,7 +29,7 @@ def follow():
             api.update_status('@' + mention.user.screen_name + ' Simply reply or QT with an NFT URI and we will provide an estimate and a Yay/ Nay from our experts!', in_reply_to_status_id = mention.id)
             print('tweet answer')
 
-        elif('#Discord' or '#discord') in mention.text:
+        elif ("#Discord" in mention.text or "#discord" in mention.text):
             print(mention.text)
             #Mark as favorite
             mention.favorite()
@@ -40,10 +40,10 @@ def follow():
             api.update_status('@' + mention.user.screen_name + ' Join our free Discord server to get rating at any time 24x7! Server here: https://discord.com/channels/933156809944993802/933156809944993804', in_reply_to_status_id = mention.id)
             print('tweet answer')
 
-        elif ('#Price' or '#price') in mention.text:
+        elif ("#Price" in mention.text or "#price" in mention.text):
             print(mention.text)
             #Mark as favorite
-            #mention.favorite()
+            mention.favorite()
             #Store the id
             last_ID = mention.id
             storeID(last_ID, File)
@@ -51,10 +51,10 @@ def follow():
             api.update_status('@' + mention.user.screen_name + ' Hey there, we would love to provide a free price estimate for NFTs. Feel free to click here or go to getmagic.ai on your mobile browser!', in_reply_to_status_id = mention.id)
             print('tweet answer')
 
-        elif ('#FindMore' or '#findmore') in mention.text:
+        elif ("#FindMore"  in mention.text or "#findmore" in mention.text):
             print(mention.text)
             #Mark as favorite
-            #mention.favorite()
+            mention.favorite()
             #Store the id
             last_ID = mention.id
             storeID(last_ID, File)
