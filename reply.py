@@ -20,7 +20,7 @@ def follow():
         #Checks for commands
         if ('#Help' or '#help') in mention.text:
             #Mark as favorite
-            mention.favorite()
+            #mention.favorite()
             print(mention.text)
             #Store the id of the mention 
             last_ID = mention.id
@@ -43,7 +43,7 @@ def follow():
         elif ('#Price' or '#price') in mention.text:
             print(mention.text)
             #Mark as favorite
-            mention.favorite()
+            #mention.favorite()
             #Store the id
             last_ID = mention.id
             storeID(last_ID, File)
@@ -54,7 +54,7 @@ def follow():
         elif ('#FindMore' or '#findmore') in mention.text:
             print(mention.text)
             #Mark as favorite
-            mention.favorite()
+            #mention.favorite()
             #Store the id
             last_ID = mention.id
             storeID(last_ID, File)
@@ -69,7 +69,8 @@ def follow():
             last_ID = mention.id
             storeID(last_ID, File)
             #Reply to mention
-            api.update_status('@' + mention.user.screen_name + ' To get a free rating simply fill out this form, we will send you an update when our experts have their rating ready! https://anup702844.typeform.com/to/DxmDIZ0t')
+            api.update_status('@' + mention.user.screen_name + ' To get a free rating simply fill out this form, we will send you an update when our experts have their rating ready! https://anup702844.typeform.com/to/DxmDIZ0t',   in_reply_to_status_id = mention.id)
+            print('tweet answer')
              
 def retrieveID(file):
     id_read = open(file, 'r')
