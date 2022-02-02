@@ -35,7 +35,7 @@ def rt(tags):
                 print('Retweeted')
                 tweet.retweet()
                 time.sleep(sleepTime)
-                data = {'_id': tweet.id, 'user': tweet.screen_user, }
+                data = {'_id': tweet.id, 'user': tweet.user.screen_user}
                 DBstorage(data)
         except:
             print('Error')
