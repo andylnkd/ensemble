@@ -1,12 +1,23 @@
+from typing import Collection
 from auth import api
 import time
 import tweepy
+import pymongo
+from pymongo import MongoClient
 
 def main():
 
     #Read the tags from a txt file
     tags = open('tags.txt', 'r')
     rt(tags.read())
+
+def DBstorage(data):
+    
+    cluster = MongoClient('mongodb+srv://admin:<ensemblemongodb>@jan2022testdb.mmli1.mongodb.net/myFirstDatabase?retryWrites=true&w=majority')
+    db = cluster['nftrater']
+    collection = db['retweets']
+
+    collection.insert_one(data)
 
 def rt(tags):
     
@@ -24,6 +35,8 @@ def rt(tags):
                 print('Retweeted')
                 tweet.retweet()
                 time.sleep(sleepTime)
+                data = {'_id': tweet.id, 'user': tweet.screen_user, }
+                DBstorage(data)
         except:
             print('Error')
 
