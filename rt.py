@@ -1,3 +1,4 @@
+from pydoc import cli
 from typing import Collection
 from auth import api
 import time
@@ -13,30 +14,37 @@ def main():
 
 def DBstorage(data):
     
-    cluster = MongoClient('mongodb+srv://admin:<ensemblemongodb>@jan2022testdb.mmli1.mongodb.net/myFirstDatabase?retryWrites=true&w=majority')
-    db = cluster['nftrater']
-    collection = db['retweets']
+    cluster = "mongodb+srv://admin:T3oSvzK0RvMsZdDK@cluster0.mmli1.mongodb.net/sample_airbnb?retryWrites=true&w=majority"
 
-    collection.insert_one(data)
+    client = MongoClient(cluster)
+
+    db = client.sample_airbnb
+
+    print(db.list_collection_names())
+
+
 
 def rt(tags):
     
     #Store the tags in a variable
     search = tags
     #Set a number of tweets to search
-    nmbrtws = 1000
+    nmbrtws = 3
     #Sleep time between to retweets
-    sleepTime = 90
+    sleepTime = 30
 
     #Search the tweets with the keywords from the query
     for tweet in tweepy.Cursor(api.search_tweets, q = search, result_type = "recent").items(nmbrtws):
         try:
             if not tweet.retweeted:
                 print('Retweeted')
-                tweet.retweet()
-                time.sleep(sleepTime)
-                data = {'_id': tweet.id, 'user': tweet.user.screen_user}
+                #tweet.retweet()
+                # id = tweet.id
+                # username = tweet.user.screen_name
+                data = {"_id": tweet.id, "user": tweet.user.screen_name}
                 DBstorage(data)
+                #print(data)
+                #time.sleep(sleepTime)
         except:
             print('Error')
 
