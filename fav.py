@@ -24,20 +24,21 @@ def DBstorage(data):
 
 def fav(tags):
     search = tags
-    nmbrtws = 2
-    sleepTime = 20
+    nmbrtws = 500
+    sleepTime = 172.8
  
     for tweet in tweepy.Cursor(api.search_tweets, q = search, result_type = "recent").items(nmbrtws):
         try:
             if not tweet.favorited:
                 print('Marked as fav')
-                #tweet.favorite()
+                tweet.favorite()
                 #Creates the twitter url
                 url = "twitter.com/" + tweet.user.screen_name + "/status/" + str(tweet.id)
                 #Puts up the data in a dictionary
                 data = {"_id": tweet.id, "user": tweet.user.screen_name, "text": tweet.text, "url": url}
+                #Adds it to the DB
                 DBstorage(data)
-                #time.sleep(sleepTime)
+                time.sleep(sleepTime)
         except:
                 print('Error')
 
