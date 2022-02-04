@@ -1,10 +1,12 @@
-from pydoc import cli
-from typing import Collection
+import imp
 from auth import api
-import time
 import tweepy
+import os
+import time
 import pymongo
 from pymongo import MongoClient
+
+CLUSTER = os.getenv('CLUESTER')
 
 def main():
 
@@ -14,37 +16,37 @@ def main():
 
 def DBstorage(data):
     
-    cluster = "mongodb+srv://admin:T3oSvzK0RvMsZdDK@cluster0.mmli1.mongodb.net/sample_airbnb?retryWrites=true&w=majority"
+    #Access the cluster
+    client = MongoClient(CLUSTER)
 
-    client = MongoClient(cluster)
+    #Set the DB
+    db = client.nftrater
 
-    db = client.sample_airbnb
-
-    print(db.list_collection_names())
-
-
+    #Insert the data in the collection
+    db.retweets.insert_one(data)
 
 def rt(tags):
     
     #Store the tags in a variable
     search = tags
     #Set a number of tweets to search
-    nmbrtws = 3
+    nmbrtws = 200
     #Sleep time between to retweets
-    sleepTime = 30
+    sleepTime = 432
 
     #Search the tweets with the keywords from the query
     for tweet in tweepy.Cursor(api.search_tweets, q = search, result_type = "recent").items(nmbrtws):
         try:
             if not tweet.retweeted:
                 print('Retweeted')
-                #tweet.retweet()
-                # id = tweet.id
-                # username = tweet.user.screen_name
-                data = {"_id": tweet.id, "user": tweet.user.screen_name}
+                tweet.retweet()
+                #Creates the twitter url
+                url = "twitter.com/" + tweet.user.screen_name + "/status/" + str(tweet.id)
+                #Puts up the data in a dictionary
+                data = {"_id": tweet.id, "user": tweet.user.screen_name, "text": tweet.text, "url": url}
+                #Send the data to the DB
                 DBstorage(data)
-                #print(data)
-                #time.sleep(sleepTime)
+                time.sleep(sleepTime)
         except:
             print('Error')
 
