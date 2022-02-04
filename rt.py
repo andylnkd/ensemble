@@ -6,7 +6,7 @@ import time
 import pymongo
 from pymongo import MongoClient
 
-CLUSTER = os.getenv('CLUESTER')
+CLUSTER = os.getenv('CLUSTER')
 
 def main():
 
